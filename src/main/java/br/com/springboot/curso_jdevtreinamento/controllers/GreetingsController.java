@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +52,7 @@ public class GreetingsController {
 		usuarioRepository.save(usuario); // save é um metodo que salva a informação, tem varios
 		return "Olá Mundo: " + name;
 	}
-
+	//Listar todos
 	// A Anotation GetMapping é a memsa que o RequestMapping a diferença é que a
 	// GeTMapping não precisa passar o parametro
 	@GetMapping(value = "/listartodos") // Coloque a rota -> Primeiro Método de API, BUSCAR TODOS
@@ -69,6 +70,17 @@ public class GreetingsController {
 		Usuario user = usuarioRepository.save(usuario);
 
 		return new ResponseEntity<Usuario>(user, HttpStatus.CREATED);
+
+	}
+	
+	
+	//ATUULZIAR 
+	@PutMapping(value = "atualizar") // Mapeia a URL
+	@ResponseBody // Descrição da resposta
+	public ResponseEntity<Usuario> atualizar (@RequestBody Usuario usuario) { // recebe os dados para salvar
+		Usuario user = usuarioRepository.saveAndFlush(usuario); //salva e roda diretamente no banco de dados
+
+		return new ResponseEntity<Usuario>(user, HttpStatus.OK);
 
 	}
 
@@ -93,5 +105,8 @@ public class GreetingsController {
     	return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     	
     }
+	
+	
+	
 
 }
